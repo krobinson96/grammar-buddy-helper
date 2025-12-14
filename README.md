@@ -1,6 +1,7 @@
-![Static Badge]([https://img.shields.io/badge/Readability-A-green?style=plastic](https://img.shields.io/badge/Readability-A-green?style=plastic&logo=readdotcv&logoColor=white))
-![Static Badge]([https://img.shields.io/badge/Maintainability-A-green?style=plastic](https://img.shields.io/badge/Maintainability-A-green?style=plastic))
-![Static Badge]([https://img.shields.io/badge/Security-A-green?style=plastic](https://img.shields.io/badge/Security-A-green?style=plastic&logo=adblock&logoColor=white))
+![Static Badge](https://img.shields.io/badge/Readability-A-green?style=plastic&logo=readdotcv&logoColor=white)
+![Static Badge](https://img.shields.io/badge/Usability-A-green?style=plastic&logo=macys&logoColor=white)
+![Static Badge](https://img.shields.io/badge/Security-A-green?style=plastic&logo=adblock&logoColor=white)
+
 
 Thank you for visiting my repository! 🙂 Be sure to leave a star! ⭐
 
