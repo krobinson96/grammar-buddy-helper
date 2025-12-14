@@ -1,0 +1,6 @@
+<expression>::=<addition>|<subtraction>|<multiplication>|( <expression> )|<constant>
+<addition>::=<constant> + <constant>|<expression> + <constant>
+<subtraction>::=<constant> - <constant>|<expression> - <constant>
+<multiplication>::=<constant> x <constant>|<expression> x <constant>
+<constant>::=<digit>
+<digit>::=0|1|2|3|4|5|6|7|8|9

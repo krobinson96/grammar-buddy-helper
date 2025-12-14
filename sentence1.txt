@@ -1,0 +1,10 @@
+<s>::=<np> <vp>|<np> <tv> <n>
+<np>::=<dp> <adjp> <n>|<pn>|<dp> <adjp> <n> <tv> <dp> <n>
+<dp>::=the|a|this|that|a
+<adjp>::=<adj>
+<adj>::=green|wonderful|faulty|subliminal|afraid|curious|tall|scared|used|fit
+<n>::=dog|cat|man|echo|television|meat|people|way|history|map
+<pn>::=bonkers|kool-aid man|peter from family guy|Elmo|John the Cable Guy
+<vp>::=<tv> <np>|<iv>
+<tv>::=hit|honored|broke|helped|brought|passes|plays|read|wrote|owes|raises
+<iv>::=died|collapsed|laughed|wept|sits|ran
