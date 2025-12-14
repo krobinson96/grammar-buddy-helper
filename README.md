@@ -6,7 +6,7 @@
 Thank you for visiting my repository! 🙂 Be sure to leave a star! ⭐
 
 This class allows the user to instantiate a GrammarBuddyHelper object which allows the creation of grammar using Backus-Naur Form notation. 
-Included with the class are sample grammar text files which demonstrate how the grammar is to be notated in order to be read and used by the class.
+Included with the class are sample grammar text files which demonstrate how the grammar is to be notated in order to be read and used by the object.
 
 ## Usage
 The top-level main() function can be edited to test out the functionality of the class. The only constructor that is included is GrammarBuddyHelper(),
