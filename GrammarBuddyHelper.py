@@ -168,7 +168,7 @@ class GrammarBuddyHelper:
         """
         if '.txt' not in filename:
             filename += '.txt'
-        with open(filename, 'w') as file:
+        with open(filename, 'w', encoding='utf-8') as file:
             for k in self.langMap.keys():
                 line = k + self.symDelim
                 for v in self.langMap[k]:
@@ -179,4 +179,23 @@ class GrammarBuddyHelper:
                 file.write(line + '\n')
         file.close()         
 
-    #TODO: updateMap func for updating existing langMap with supplied rule set, empty ruleset may cause a null map to exist after calling constructor
+def main():
+    rules = [] # Empty list to hold grammar
+
+    try:
+        with open("BNF Forms/sentence1.txt", 'r') as file:
+            for line in file:
+                rules.append(line.strip())
+    except FileNotFoundError as e:
+        print(f"Uh oh\n{e}")
+    gb = GrammarBuddyHelper(rules) # Constructing GrammarBuddyHelper object
+
+    gb.addExpression('<x>','<s>') # Adding sample expression
+    for i in range(100):
+        print(f'{i+1}: {gb.generate('<x>')}') # Generate 100 sample expressions
+    gb.saveMap("BNF Forms/testgrammar.txt") # Saving updated grammar
+
+if __name__ == "__main__":
+    main()
+
+#TODO: updateMap func for updating existing langMap with supplied rule set, empty ruleset may cause a null map to exist after calling constructor
