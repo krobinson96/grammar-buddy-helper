@@ -34,6 +34,7 @@ saveMap(filename='BNF Forms/grammar.txt')
 Written by Kody L. Robinson 2025
 """
 import random
+import pyinputplus as pyip
 
 class GrammarBuddyHelper:
     def __init__(self, rules, symDelim='::=', exprDelim='|'):
@@ -55,10 +56,10 @@ class GrammarBuddyHelper:
         ----------
         langMap : { str: str[] }
             a dictionary of the grammar which is in the form of { symbol : [expression] }
+            
         """
         if not rules:
-            print("Rule set cannot be empty")
-            return
+            print("!WARNING: Rule set cannot be empty")
         self.symDelim = symDelim
         self.exprDelim = exprDelim
         self.langMap = {}
@@ -179,11 +180,20 @@ class GrammarBuddyHelper:
                 file.write(line + '\n')
         file.close()         
 
+    def updateMap(self, filename):
+        if '.txt' not in filename:
+            filename += '.txt'
+        with open(filename, 'r', encoding='utf-8') as file:
+            for rule in file:
+                self.addSymbol(rule.split(self.symDelim)[0])
+                for expr in rule.split(self.symDelim)[1].split(self.exprDelim):
+                    self.addExpression(rule.split(self.symDelim)[0], expr)
+
 def main():
     rules = [] # Empty list to hold grammar
 
     try:
-        with open("BNF Forms/sentence1.txt", 'r') as file:
+        with open("BNF Forms/math.txt", 'r') as file:
             for line in file:
                 rules.append(line.strip())
     except FileNotFoundError as e:
@@ -192,10 +202,66 @@ def main():
 
     gb.addExpression('<x>','<s>') # Adding sample expression
     for i in range(100):
-        print(f'{i+1}: {gb.generate('<x>')}') # Generate 100 sample expressions
+        print(f'{i+1}: {gb.generate('<expression>')}') # Generate 100 sample expressions
     gb.saveMap("BNF Forms/testgrammar.txt") # Saving updated grammar
 
 if __name__ == "__main__":
-    main()
+    rules = []
+    start = pyip.inputYesNo("Would you like to load a grammar file? Press ENTER to exit\n", blank=True) 
+    if start == 'yes':
+        while not rules:
+            filename = input("Path of grammar file? Press ENTER to skip\n")
+            if not filename:
+                break
+            try:
+                with open(filename, 'r', encoding='utf-8') as file:
+                    for line in file:
+                        rules.append(line.strip())
+                gb = GrammarBuddyHelper(rules)
+            except FileNotFoundError as e:
+                print(f"Uh oh \n{e}\n")
+    elif not start:
+        gb = GrammarBuddyHelper([])
+    else:
+        gb = GrammarBuddyHelper([])
+    flag = True
+    while flag:
+        choice = pyip.inputMenu(['Generate a symbol', 'List symbols', 'Add a symbol', 'Add an expression', 'Does it contain?', 'Open a grammar text file', 'Save grammar to a text file', 'Exit'], numbered=True)
 
-#TODO: updateMap func for updating existing langMap with supplied rule set, empty ruleset may cause a null map to exist after calling constructor
+        match choice:
+            case 'Generate a symbol':
+                if 0 == len(gb.langMap.keys()): 
+                    print("Cannot generate a big nothing symbol!")
+                    continue
+                print("Press ENTER to skip")
+                choice = pyip.inputMenu(list(gb.langMap.keys()), numbered=True, blank=True)
+                print(gb.generate(choice))
+            case 'List symbols':
+                for i in gb.langMap.keys():
+                    print(i)
+            case 'Add a symbol':
+                symbol = input("What symbol would you like to add?\n")
+                gb.addSymbol(symbol)
+            case 'Add an expression':
+                symbol = input("What symbol does this expression define?\n")
+                expression = input("What is the expression?\n")
+                gb.addExpression(symbol=symbol, expression=expression)
+            case 'Does it contain?':
+                term = input("What term would you like to check?\n")
+                print(gb.contains(term))
+            case 'Open a grammar text file':
+                filename = input("What is the name of the text file you would like to open? Press ENTER to exit\n")
+                if filename:
+                    try:
+                        gb.updateMap(filename)
+                    except Exception as e:
+                        print(f'Uh oh\n{e}')
+            case 'Save grammar to a text file':
+                filename = input("What name would you like to save the file as? Press ENTER to exit\n")
+                if filename:
+                    try:
+                        gb.saveMap(filename)
+                    except Exception as e:
+                        print(f'Uh oh \n{e}')
+            case 'Exit':
+                flag = False
