@@ -15,7 +15,7 @@ added and does not add a duplicate if it already is. An entirely new rule can be
 expression exist in the grammar already. The saveMap() function allows the current grammar to be saved under the default path 'BNF Forms/[File Name].txt'
 
 ## TODO
-Add a new function to import a new list of rules to an existing GrammarBuddyHelper object.
+Add graphical user interface.
 
 ##  Please consider the below factors while contributing ❕
 
