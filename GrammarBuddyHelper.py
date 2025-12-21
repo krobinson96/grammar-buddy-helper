@@ -33,7 +33,7 @@ saveMap(filename='BNF Forms/grammar.txt')
     this function saves the current grammar as a text file
 Written by Kody L. Robinson 2025
 """
-import random
+import random, sys
 import pyinputplus as pyip
 
 class GrammarBuddyHelper:
@@ -221,7 +221,7 @@ if __name__ == "__main__":
             except FileNotFoundError as e:
                 print(f"Uh oh \n{e}\n")
     elif not start:
-        gb = GrammarBuddyHelper([])
+        sys.exit()
     else:
         gb = GrammarBuddyHelper([])
     flag = True
