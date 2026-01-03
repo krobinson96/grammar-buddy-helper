@@ -177,17 +177,17 @@ class GrammarBuddyHelper:
                         line += v
                     else:    
                         line += v + self.exprDelim
-                file.write(line + '\n')
+                file.write(line+"\n")
         file.close()         
 
     def updateMap(self, filename):
         if '.txt' not in filename:
-            filename += '.txt'
+            filename += '.txt'    
         with open(filename, 'r', encoding='utf-8') as file:
             for rule in file:
-                self.addSymbol(rule.split(self.symDelim)[0])
-                for expr in rule.split(self.symDelim)[1].split(self.exprDelim):
-                    self.addExpression(rule.split(self.symDelim)[0], expr)
+                self.addSymbol(rule.strip().split(self.symDelim)[0])
+                for expr in rule.strip().split(self.symDelim)[1].split(self.exprDelim):
+                    self.addExpression(rule.strip().split(self.symDelim)[0].strip(), expr)
 
 def main():
     rules = [] # Empty list to hold grammar
@@ -226,7 +226,7 @@ if __name__ == "__main__":
         gb = GrammarBuddyHelper([])
     flag = True
     while flag:
-        choice = pyip.inputMenu(['Generate a symbol', 'List symbols', 'Add a symbol', 'Add an expression', 'Does it contain?', 'Open a grammar text file', 'Save grammar to a text file', 'Exit'], numbered=True)
+        choice = pyip.inputMenu(['Generate a symbol', 'Generate a number of symbols', 'List symbols', 'Add a symbol', 'Add an expression', 'Does it contain?', 'Open a grammar text file', 'Save grammar to a text file', 'Exit'], numbered=True)
 
         match choice:
             case 'Generate a symbol':
@@ -236,6 +236,13 @@ if __name__ == "__main__":
                 print("Press ENTER to skip")
                 choice = pyip.inputMenu(list(gb.langMap.keys()), numbered=True, blank=True)
                 print(gb.generate(choice))
+            case 'Generate a number of symbols':
+                symbol = pyip.inputMenu(list(gb.langMap.keys()), prompt="Which symbol would you like to generate? Press ENTER to exit\n", blank=True, numbered=True)
+                if symbol: 
+                    print(f"How many {symbol}'s would you like to print?")
+                    symbols = pyip.inputNum(greaterThan=-1)
+                    for i in range(symbols):
+                        print(f"{i+1}: {gb.generate(symbol)}")
             case 'List symbols':
                 for i in gb.langMap.keys():
                     print(i)
