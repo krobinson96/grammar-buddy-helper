@@ -237,6 +237,9 @@ if __name__ == "__main__":
                 choice = pyip.inputMenu(list(gb.langMap.keys()), numbered=True, blank=True)
                 print(gb.generate(choice))
             case 'Generate a number of symbols':
+                if 0 == len(gb.langMap.keys()):
+                    print("Cannot generate multiple big nothing symbols!")
+                    continue
                 symbol = pyip.inputMenu(list(gb.langMap.keys()), prompt="Which symbol would you like to generate? Press ENTER to exit\n", blank=True, numbered=True)
                 if symbol: 
                     print(f"How many {symbol}'s would you like to print?")
