@@ -151,11 +151,13 @@ class GrammarBuddyHelper:
         expression : str
             this is the expression to be added 
         """
-        if symbol in self.langMap:
+        if symbol in self.langMap and expression not in self.langMap[symbol]:
+            self.langMap[symbol].append(expression)
+        elif symbol not in self.langMap:
+            self.addSymbol(symbol)
             self.langMap[symbol].append(expression)
         else:
-            self.addSymbol(symbol)
-            self.langMap.update({symbol: [expression]})
+            print(f'Expression {expression} is already in the map under {symbol}!')
 
     def saveMap(self, filename='BNF Forms/grammar.txt'):
         """
@@ -185,9 +187,9 @@ class GrammarBuddyHelper:
             filename += '.txt'    
         with open(filename, 'r', encoding='utf-8') as file:
             for rule in file:
-                self.addSymbol(rule.strip().split(self.symDelim)[0])
+                #self.addSymbol(rule.strip().split(self.symDelim)[0])
                 for expr in rule.strip().split(self.symDelim)[1].split(self.exprDelim):
-                    self.addExpression(rule.strip().split(self.symDelim)[0].strip(), expr)
+                    self.addExpression(rule.strip().split(self.symDelim)[0].strip(), expr.strip())
 
 def main():
     rules = [] # Empty list to hold grammar
@@ -226,7 +228,7 @@ if __name__ == "__main__":
         gb = GrammarBuddyHelper([])
     flag = True
     while flag:
-        choice = pyip.inputMenu(['Generate a symbol', 'Generate a number of symbols', 'List symbols', 'Add a symbol', 'Add an expression', 'Does it contain?', 'Open a grammar text file', 'Save grammar to a text file', 'Exit'], numbered=True)
+        choice = pyip.inputMenu(['Generate a symbol', 'Generate a number of symbols', 'List symbols', 'List expressions', 'Add a symbol', 'Add an expression', 'Does it contain?', 'Open a grammar text file', 'Save grammar to a text file', 'Exit'], numbered=True)
 
         match choice:
             case 'Generate a symbol':
@@ -249,6 +251,16 @@ if __name__ == "__main__":
             case 'List symbols':
                 for i in gb.langMap.keys():
                     print(i)
+            case 'List expressions':
+                if 0 == len(gb.langMap.keys()):
+                    print("Cannot print a list of big nothing burgers!")
+                    continue
+                symbol = pyip.inputMenu(list(gb.langMap.keys()), prompt="Which expressions would you like to list?\n", numbered=True, blank=True)
+                if symbol and len(gb.langMap[symbol]) > 0:
+                    for i in range(len(gb.langMap[symbol])):
+                        print(f'{i+1}: {gb.langMap[symbol][i]}')
+                else:
+                    print("Symbol has no definitions!")        
             case 'Add a symbol':
                 symbol = input("What symbol would you like to add?\n")
                 gb.addSymbol(symbol)
